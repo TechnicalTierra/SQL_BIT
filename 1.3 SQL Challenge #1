@@ -1,0 +1,9 @@
+/*Query #1: Write SQL code to select all the information (select all the columns and all the rows) in the movies table.*/
+SELECT * 
+FROM movies;
+
+/*Query #2: Write another SQL query that retrieves all the information in the table for movies released in 2021 or later. Order the results so that the newest movies are listed first.*/
+SELECT * 
+FROM movies
+WHERE released > 2020
+;
