@@ -1,0 +1,43 @@
+/*Query #1 Instructions: Some patients have already made payments toward their bill and we’d like to see how much each patient has remaining.
+Display the patient ID and create a new column that calculates how much each patient still needs to pay. Call the new column payment_remaining.*/
+SELECT patient_id, procedure_bill - payment_received AS payment_remaining
+FROM billing;
+
+/*Query #2 Instructions: Let’s look at the remaining payment in a different way: what fraction of their bill has each patient paid so far?
+Select every patient ID, the procedure bill, and create a new column that calculates the fraction of what the patient has paid toward their procedure bill. Call the new column payment_fraction and sort it from low to high.*/ 
+SELECT patient_ID, procedure_bill, (payment_received / procedure_bill) * 100 AS payment_fraction
+FROM billing
+ORDER BY payment_fraction;
+
+/*Query #3 Instructions: Let’s convert the fractions into percentages. Display the patient ID, payment_fraction (copy from the previous query), and add a column displaying the percent of the bill that the patient has paid, rounded to one place. Call the new column payment_percent.*/ 
+SELECT patient_ID, procedure_bill, (payment_received / procedure_bill) * 100 AS payment_fraction, ROUND((payment_received / procedure_bill) * 100, 1) AS payment_percent
+FROM billing;
+
+/*Query #4 Instructions: Display the patient ID, the payment_fraction column from query #2, and a new column titled payment_status, which categorizes the payment_fraction column into three categories: For 100% payment, write “paid”. If the payment is less than 100% but more than 0%, use “in progress”. If the patient hasn’t made a payment, write “no payment”.
+Let’s break this query down: Using a CASE expression will enable us to create categories
+If someone has paid 100% of their bill, write "paid"
+If someone has paid 0%, write “no payment”
+If it’s something else (a value between 0 and 100), write “in progress” name the column payment_status
+Remember that 50% is equivalent to .5 for the fraction column.*/
+SELECT patient_ID, procedure_bill, (payment_received / procedure_bill) * 100 AS payment_fraction, ROUND((payment_received / procedure_bill) * 100, 1) AS payment_percent,
+CASE WHEN ROUND((payment_received / procedure_bill) * 100, 1) = 100 THEN "paid"
+WHEN ROUND((payment_received / procedure_bill) * 100, 1) = 0 THEN "no payment"
+ELSE "in progress"
+END AS payment_status
+FROM billing; 
+
+/*Query #5 Instructions: Alter the previous query to create more categories in payment_status.
+If someone has paid 100% of their bill, write "paid"
+if someone has paid 0%, write “no payment”
+If the patient has paid 75% or more, write "75%+".
+Do the same for 50% and 25%
+If the number is under 25%, write "Under 25%"
+name the column payment_status*/
+SELECT patient_ID, procedure_bill, (payment_received / procedure_bill) * 100 AS payment_fraction, ROUND((payment_received / procedure_bill) * 100, 1) AS payment_percent,
+CASE WHEN ROUND((payment_received / procedure_bill) * 100, 1) = 100 THEN "paid"
+WHEN ROUND((payment_received / procedure_bill) * 100, 1) >= 75 THEN "75+"
+WHEN ROUND((payment_received / procedure_bill) * 100, 1) >= 50 THEN "50+"
+WHEN ROUND((payment_received / procedure_bill) * 100, 1) >= 25 THEN "25+"
+ELSE "no payment"
+END AS payment_status
+FROM billing;
