@@ -1,0 +1,36 @@
+/*Create five questions based on the data and then answer them using SQL. Write at least 5 queries. Do each of the following at least once:*/
+/*Query 1: Use WHERE with one of the following to filter the data in an interesting way. AND, OR, IN, or NOT IN*/ 
+SELECT company_name, avg_employee_tenure
+FROM fortune_companies
+WHERE avg_employee_tenure > 7 
+AND industry IN ("Technology")
+ORDER BY avg_employee_tenure ASC;
+
+/*Query 2: Write a calculation and use an alias to name it.*/ 
+SELECT company_name, revenue, employees, ROUND((revenue * 1000000) / employees,2) AS revenue_per_employee
+FROM fortune_companies;
+ 
+/*Query 3: Categorize the data in a new way using a CASE expression.*/ 
+SELECT company_name, maternity_leave_weeks, 
+CASE WHEN maternity_leave_weeks > 13 THEN "best"
+WHEN maternity_leave_weeks > 9 THEN "better"
+WHEN maternity_leave_weeks > 6 THEN "good"
+ELSE "ok"
+END AS maternity_leave_rank
+FROM fortune_companies
+ORDER BY maternity_leave_weeks DESC; 
+
+/*Query 4: Use a HAVING clause to determine something interesting about the data by group. It may help to use an aggregate function like AVG, SUM, COUNT, MAX, or MIN. ​*/
+SELECT company_name, MAX(paid_time_off_days), AVG(maternity_leave_weeks)
+FROM fortune_companies
+GROUP BY company_name 
+HAVING paid_time_off_days > 20
+ORDER BY paid_time_off_days, maternity_leave_weeks ASC;
+
+/*QUERY 5: Note: The column healthcare_benefits has a BIT data type, where 1 is equivalent to “yes” or “true” and 0 is “no” or “false”.*/
+SELECT company_name,
+CASE WHEN healthcare_benefits = 1 THEN "yes"
+WHEN healthcare_benefits = 0 THEN "no"
+ELSE "unknown"
+END AS healthcare_benefits
+FROM fortune_companies;
