@@ -1,0 +1,26 @@
+/*Query 1: Display the customer id, name, and shipping address for customers who have an order.*/
+SELECT c.customer_id, c.customer_name, c.shipping_address 
+FROM customers c
+JOIN shipments s
+ON c.customer_id = s.customer_id 
+WHERE status = "Delivered"
+--ORDER BY c.customer_id ASC;
+
+
+/*Query 2: Show the shipment id and shipping address for customers whose shipment has a status of "In Transit”.*/ 
+SELECT s.shipment_id 
+FROM customers c
+JOIN shipments s
+ON c.customer_id = s.customer_id 
+WHERE status = "In Transit";
+
+
+/*Query 3: We want to let our current customers know about a new discount for Express shipments, but we only want to send the discount code to customers who have not used Express shipments before.
+-- Instruction: Display the name and email address for customers who have not used Express shipments.
+-- Notes: You can use <> or != to mean “not equal to”
+We only need to see each name once, even if they’ve made more than one purchase (you can assume that a person always uses the same shipping type). This is a great chance to use DISTINCT, which we learned in the relational database lesson!*/
+SELECT c.customer_name, c.contact_email, s.shipping_method
+FROM customers c
+JOIN shipments s
+ON c.customer_id = s.customer_id 
+WHERE shipping_method != "Standard";
