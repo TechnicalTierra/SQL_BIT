@@ -1,0 +1,62 @@
+/*Query #1: Write a query that selects the customer id of all the customers who are subscribed to Cell Phone service products.*/
+--Step 1: Write the inner query
+SELECT product_id
+FROM products
+WHERE product_type = "Cell Phone Service";
+
+--Step 2: Write the outer query
+SELECT customer_id 
+FROM customer_subscriptions
+--WHERE product_id IN ();
+
+--Step 3: Combine the queries
+SELECT customer_id 
+FROM customer_subscriptions
+WHERE product_id IN (SELECT product_id
+FROM products
+WHERE product_type = "Cell Phone Service");
+-- -- 
+
+
+
+
+/*Query #2: Now that we’ve practiced building a subquery together, you can build on yourself! Write a query that will select the email address of all the customers with the "Internet" product type.*/ 
+-- Step 1: inner query (select 'internet' product type)
+SELECT product_id
+FROM products
+WHERE product_type = "Internet";
+
+-- Step 2: outer query (select email addresS)
+SELECT email
+FROM customer_subscriptions
+--WHERE product_id IN ()*/
+
+-- Step 3: combine queries
+SELECT email
+FROM customer_subscriptions
+WHERE product_id IN (SELECT product_id
+FROM products
+WHERE product_type = "Internet");
+-- -- 
+
+
+
+
+/*Query #3: Write a query that will select the emails of all customers who are paying more than the average price for internet.*/ 
+-- Step 1: inner query (paying more than avg price for internet)
+SELECT avg(monthly_price)
+FROM products
+WHERE product_type = "Internet";
+
+-- Step 2: outer query (emails of customers)
+SELECT email 
+FROM customer_subscriptions
+--WHERE monthly_price IN ()
+
+-- Step 3: combine queries
+SELECT email 
+FROM customer_subscriptions
+WHERE price > (SELECT avg(monthly_price)
+FROM products
+WHERE product_type = "Internet"); 
+
