@@ -1,0 +1,20 @@
+/*Question 2: For all the 12th-grade courses, show the course name, textbook title, and authorID.
+In other words, show all courses that have a GradeLevel of 12, and associated textbook titles and author IDs, if any.*/ 
+SELECT Courses.GradeLevel, Courses.CourseName, Textbooks.Title, AuthorTextbookLink.AuthorID 
+FROM Courses
+INNER JOIN Textbooks
+ON Courses.TextbookID = Textbooks.TextbookID
+INNER JOIN AuthorTextbookLink
+ON AuthorTextbookLink.TextbookID = Textbooks.TextbookID
+WHERE GradeLevel = 12; 
+
+/*Question 3: For 12th-grade courses with textbooks, show the course name, textbook title, and author name. This will have lot of steps - try to break it down like we did for number 1.*/ 
+SELECT Courses.GradeLevel, Courses.CourseName, Textbooks.Title, Authors.Name
+FROM Textbooks
+JOIN Courses 
+ON Textbooks.TextbookID = Courses.TextbookID 
+JOIN AuthorTextbookLink
+ON Textbooks.TextbookID = AuthorTextbookLink.TextbookID
+JOIN Authors 
+ON AuthorTextbookLink.AuthorID = Authors.AuthorID 
+WHERE GradeLevel = 12;
