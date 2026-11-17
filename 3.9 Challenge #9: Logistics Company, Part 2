@@ -1,0 +1,20 @@
+/*Query 1: Show the customer name and the package description for all customers and all shipments.*/
+SELECT customer_name, package_description
+FROM customers 
+FULL JOIN shipments
+ON customers.customer_id = shipments.customer_id;
+
+/*Query 2: Display the shipment id, shipping address, and weight for all shipments weighing 3 or more kilograms. Order the results from heaviest to lightest.*/
+SELECT shipments.shipment_id, customers.shipping_address, shipments.weight_kg 
+FROM customers
+FULL JOIN shipments
+ON customers.customer_id = shipments.customer_id
+WHERE weight_kg >= 3
+ORDER BY weight_kg DESC; 
+
+/*Query 3: Display the billing address, shipping address, and shipping id for all customers whose billing address is in Texas (billing address contains ‘TX’).*/ 
+SELECT customers.billing_address, customers.shipping_address, shipments.shipment_id
+FROM customers
+FULL JOIN shipments 
+ON customers.customer_id = shipments.customer_id
+WHERE customers.billing_address LIKE "%TX%"; 
