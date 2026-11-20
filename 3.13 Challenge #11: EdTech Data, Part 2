@@ -1,0 +1,8 @@
+/*Question 1: Using the textbooks table, make a list of all of the textbooks. Include the subject, the current book title, and the out of date book title. Order the results by the current textbook title.*/ 
+SELECT CurrentTextbooks.TextbookID, CurrentTextbooks.Subject, CurrentTextbooks.Title, UpdatedTextbooks.UpdatedVersion
+FROM Textbooks CurrentTextbooks
+LEFT JOIN Textbooks UpdatedTextbooks
+ON CurrentTextbooks.TextbookID = UpdatedTextbooks.UpdatedVersion
+ORDER BY UpdatedTextbooks.UpdatedVersion;
+
+
