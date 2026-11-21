@@ -14,3 +14,14 @@ ON CurrentTextbooks.TextbookID = UpdatedTextbooks.UpdatedVersion
 --WHERE UpdatedTextbooks.UpdatedVersion NOT LIKE "null"
 ORDER BY UpdatedTextbooks.UpdatedVersion; 
 
+
+/*Question 3: Using the authors table, make a list of all the authors who are reviewing a book. Include the AuthorID, author’s name, and the name of the author being reviewed. Order the results by AuthorID for the reviewer (not the person being reviewed) in ascending order.
+This time we’ll use descriptive aliases, rather than “A” and “B”. Call table1 “authors” and table2 “peers”
+You’ll need to use the name column twice.
+For the authors table, call the name column “Reviewer”.
+For the peers table, call the name column “Being_reviewed”
+Tip! Check your work when you get a result - do you see Connie (ID 4) as the reviewer for Olivia?*/
+SELECT authors.AuthorID, authors.Name AS Reviewer, peers.name AS Being_reviewed
+FROM Authors authors
+INNER JOIN Authors peers
+ON authors.Reviewing = peers.AuthorID;
