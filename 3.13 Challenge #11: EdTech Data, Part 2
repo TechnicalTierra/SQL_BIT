@@ -6,3 +6,11 @@ ON CurrentTextbooks.TextbookID = UpdatedTextbooks.UpdatedVersion
 ORDER BY UpdatedTextbooks.UpdatedVersion;
 
 
+/*Question 2: Make one change to your above answer to display a list of all the textbooks that have an updated version. Display the same columns (subject, the current book title, and the out of date book title).*/
+SELECT CurrentTextbooks.TextbookID, CurrentTextbooks.Subject, CurrentTextbooks.Title, UpdatedTextbooks.UpdatedVersion
+FROM Textbooks CurrentTextbooks
+INNER JOIN Textbooks UpdatedTextbooks
+ON CurrentTextbooks.TextbookID = UpdatedTextbooks.UpdatedVersion 
+--WHERE UpdatedTextbooks.UpdatedVersion NOT LIKE "null"
+ORDER BY UpdatedTextbooks.UpdatedVersion; 
+
