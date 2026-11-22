@@ -1,0 +1,37 @@
+/*🎯 Objective: Come up with six questions based on the data and then answer them using SQL.
+
+Write at least 6 different queries. Do each of the following at least once:
+--LEFT JOIN
+--INNER JOIN
+--Multiple JOINs in one query
+--Either:
+--a) query with a subquery
+--b) SELF JOIN
+--Then, write two queries of your choice.
+Note: Some columns in the reservations table have a BIT data type, where 1 is equivalent to “yes” or “true” and 0 is “no” or “false”.*/ 
+
+--Query 1: Left Join - Write a query that returns the event id, event, event type, association, association type
+SELECT events.event_id, events.event_name, events.event_type, vips.association, vips.assoc_type
+FROM events 
+LEFT JOIN vips
+ON events.event_id = vips.event;
+
+--Query 2: Inner Join - Write a query that returns VIPS's member ID, first and last name, association, association type, and order by member date
+SELECT vips.member_id, vips.first_name, vips.last_name, vips.member_since, vips.association, vips.assoc_type
+FROM vips
+INNER JOIN reservations 
+ON vips.member_id = reservations.member_id 
+ORDER BY vips.member_since; 
+
+--Query 3: Multiple JOINs 
+SELECT events.event_id, events.event_name, events.event_type, hotels.hotel_name, vips.association, vips.assoc_type
+FROM vips
+JOIN reservations
+ON vips.member_id = reservations.member_id
+JOIN events
+ON vips.event = events.event_id
+JOIN hotels
+ON reservations.hotel = hotels.hotel_id
+ORDER BY events.event_id;
+
+
