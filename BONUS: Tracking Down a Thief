@@ -1,0 +1,57 @@
+/*Query 1 🏙️: We have witness testimony that the suspect was in Carnival City on January 13th, 2021, with a reported sighting at 5:01 pm.
+Using cell phone location data, list all suspects who were in that location at that time.
+Display their first and last names, their location data, as well as the timestamp.
+Assume that the dates are stored in the MM/DD/YY HH:MM format.*/ 
+SELECT s.suspect_first_name, s.suspect_last_name, loc.cell_location, loc.date_time
+FROM suspect_info s
+JOIN location_info loc
+ON s.suspect_id = loc.suspect_id
+WHERE cell_location = "Carnival City"
+AND loc.date_time = "01/13/21 17:01"; 
+
+
+/*Query 2 🪪: The suspect was able to break into the facility that housed the poodle because of a stolen employee ID card. Based on witness testimony of an overheard phone call, detectives believe that the suspect stole the ID from a close friend and that the friend was some type of specialist.
+Find suspects with associates who have occupational titles containing the word “Specialist,” and who have a relationship to the suspect labeled as “Friend”.
+Columns to retrieve: suspect_first_name, suspect_last_name, associate_alias, occupation, relationship_to_suspect*/ 
+SELECT s.suspect_first_name, s.suspect_last_name, assoc.associate_alias, assoc.occupation, assoc.relationship_to_suspect
+FROM suspect_info s
+JOIN associates_info assoc
+ON s.suspect_id = assoc.suspect_id
+WHERE assoc.relationship_to_suspect = "Friend"
+AND assoc.occupation LIKE "%Specialist%"; 
+
+
+/*Query 3 🚗: A key witness was able to see the suspect’s getaway vehicle. The vehicle was a minivan and the witness claimed that the license plate ended in “D0G” (D-zero-G).
+Find suspects who own a minivan with a license plate that ends with “D0G”.
+Columns to retrieve: suspect_first_name, suspect_last_name, cell_location, car_model, license_plate*/ 
+SELECT s.suspect_first_name, s.suspect_last_name, loc.cell_location, v.car_model, v.license_plate
+FROM suspect_info s
+JOIN vehicle_info v 
+ON s.suspect_id = v.suspect_id 
+JOIN location_info loc
+ON s.suspect_id = loc.suspect_id
+WHERE v.license_plate LIKE "%D0G"; 
+
+
+/*Query 4 🍭: The detectives have created a list of keywords and want to know if any alibis contain these words: “dog”, “cotton”, and “candy”.
+Find all suspects that have an alibi that contains the word “dog”, “cotton”, or “candy”.
+Columns to retrieve: suspect_first_name, suspect_last_name, alibi_statement*/ 
+SELECT s.suspect_first_name, s.suspect_last_name, al.alibi_statement
+FROM suspect_info s
+JOIN alibi_info al
+ON s.suspect_id = al.suspect_id 
+WHERE al.alibi_statement LIKE "%dog%" 
+OR al.alibi_statement LIKE "%cotton%" 
+OR al.alibi_statement LIKE "%candy%";
+
+
+/*Query 5 🗺️: Find all suspects whose data location and alibi location do not match.
+Columns to retrieve: suspect_id, suspect_first_name, suspect_last_name, cell_location, alibi_location*/
+SELECT s.suspect_id, s.suspect_first_name, s.suspect_last_name, loc.cell_location, al.alibi_location 
+FROM suspect_info s
+JOIN location_info loc
+ON s.suspect_id = loc.suspect_id
+JOIN alibi_info al
+ON s.suspect_id = al.suspect_id
+WHERE loc.cell_location <> al.alibi_location; 
+
