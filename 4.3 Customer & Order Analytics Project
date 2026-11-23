@@ -1,0 +1,39 @@
+/*Question #1: How many unique orders were placed in January? In other words, how many distinct order ids do we have?
+Remember to filter out the blank and incorrect order IDs like we did in the "dealing with messy data" section of the previous lesson!*/
+--how many = COUNT()
+--distinct order 
+SELECT COUNT(DISTINCT orderID)
+FROM BIT_DB.JanSales 
+AND length(orderID) = 6 
+AND orderID <> '';
+
+
+/*Question #2: How many of those orders were for an iPhone?*/
+SELECT COUNT(DISTINCT orderID)
+FROM BIT_DB.JanSales 
+WHERE Product = "iPhone"
+AND length(orderID) = 6 
+AND orderID <> ''; 
+
+
+/*Question #3: Select the customer account numbers for all the orders that were placed in February.*/
+SELECT cus.order_id, cus.acctnum
+FROM BIT_DB.customers cus
+JOIN FebSales feb
+ON cus.order_id = feb.orderID 
+WHERE length(cus.order_id) = 6
+AND cus.order_id <> ""; 
+
+
+/*Question #4: Which product was the cheapest one sold in January, and what was the price?*/ 
+SELECT jan.product, MIN(jan.price)
+FROM BIT_DB.customers cus
+JOIN JanSales jan
+ON cus.order_id = jan.orderID 
+GROUP BY product, price
+ORDER BY price ASC
+LIMIT 1;
+
+/*Question #5: What is the total revenue for each product sold in January?
+(Revenue can be calculated using the number of products sold and the price of the products).*/
+
